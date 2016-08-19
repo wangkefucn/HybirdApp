@@ -1,0 +1,10 @@
+{
+  "name": "STAR_MF",
+  "app_id": "",
+  "proxies": [
+    {
+      "path": "/apis",
+      "proxyUrl": "http://localhost/apis"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+<ion-view title="Login" id="login" class=" ">
+    <ion-content padding="true" class="has-header">
+        <form id="login-form1" class="list ">
+            <ion-list id="login-list1" class=" ">
+                <label class="item item-input item-stacked-label " id="login-input1">
+                    <span class="input-label">部店コード</span>
+                    <input type="number" placeholder="" ng-model="loginData.butenCd">
+                </label>
+                <label class="item item-input item-stacked-label " id="login-input3">
+                    <span class="input-label">口座番号</span>
+                    <input type="number" placeholder="" ng-model="loginData.kozaNo">
+                </label>
+                <label class="item item-input item-stacked-label " id="login-input2">
+                    <span class="input-label">ログインパスワード</span>
+                    <input type="password" placeholder="" ng-model="loginData.password">
+                </label>
+            </ion-list>
+            <div class="spacer" style="height: 40px;"></div>
+            <a id="login-button1" class=" button button-assertive  button-block "ng-click="login()">ログイン</a>
+        </form>
+    </ion-content>
+</ion-view>
