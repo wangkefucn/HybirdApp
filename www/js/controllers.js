@@ -30,13 +30,42 @@ function ($scope, $stateParams, $http, $state) {
 		var data = {};
 		data.serviceCommon = serviceCommon;
 		data.aplData = aplData;
-	    $http.post('https://w00sec-trading.uat.starmf.jp/ws/mfCmnCauSysLgiAction_ws.do', data)
-	    .success(function(response){
-	    	alert(JSON.stringify(response));
-         if (response.serviceCommon.resultCd === '201' || response.serviceCommon.resultCd === '200' ) {
-            $state.go("tabsController.hometop", {}, {reload: true});
-            event.preventDefault();
-         }
-        });
-	  }
+    //$http.post('https://w00sec-trading.uat.starmf.jp/ws/mfCmnCauSysLgiAction_ws.do', data)
+    //.success(function(response){
+    //  alert(JSON.stringify(response));
+    //   if (response.serviceCommon.resultCd === '201' || response.serviceCommon.resultCd === '200' ) {
+          $state.go("tabsController.hometop", {}, {reload: true});
+          event.preventDefault();
+    //   }
+    //  });
+	  };
 }])
+
+.controller('hometopCtrl', function($scope, Camera) {
+  $scope.getPhoto = function() {
+    Camera.getPicture().then(function(imageURI) {
+      console.log(imageURI);
+      $scope.lastPhoto = imageURI;
+    }, function(err) {
+      console.err(err);
+    }, {
+      quality: 75,
+      targetWidth: 320,
+      targetHeight: 320,
+      saveToPhotoAlbum: false
+    });
+  };
+})
+
+function takePicture() {
+  navigator.camera.getPicture(function(imageURI) {
+
+    // imageURI is the URL of the image that we can use for
+    // an <img> element or backgroundImage.
+
+  }, function(err) {
+
+    // Ruh-roh, something bad happened
+
+  }, cameraOptions);
+}
