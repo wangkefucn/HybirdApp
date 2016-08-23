@@ -30,13 +30,55 @@ function ($scope, $stateParams, $http, $state) {
 		var data = {};
 		data.serviceCommon = serviceCommon;
 		data.aplData = aplData;
-	    $http.post('https://w00sec-trading.uat.starmf.jp/ws/mfCmnCauSysLgiAction_ws.do', data)
-	    .success(function(response){
-	    	alert(JSON.stringify(response));
-         if (response.serviceCommon.resultCd === '201' || response.serviceCommon.resultCd === '200' ) {
-            $state.go("tabsController.hometop", {}, {reload: true});
-            event.preventDefault();
-         }
-        });
-	  }
+    //$http.post('https://w00sec-trading.uat.starmf.jp/ws/mfCmnCauSysLgiAction_ws.do', data)
+    //.success(function(response){
+    //  alert(JSON.stringify(response));
+    //   if (response.serviceCommon.resultCd === '201' || response.serviceCommon.resultCd === '200' ) {
+          $state.go("tabsController.hometop", {}, {reload: true});
+          event.preventDefault();
+    //   }
+    //  });
+	  };
 }])
+
+.controller('hometopCtrl', function($scope, $cordovaCamera) {
+  $scope.takePhoto = function () {
+    var options = {
+      quality: 75,
+      destinationType: Camera.DestinationType.FILE_URI,
+      sourceType: Camera.PictureSourceType.CAMERA,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 300,
+      targetHeight: 300,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false
+    };
+
+    $cordovaCamera.getPicture(options).then(function (imageURI) {
+      $scope.imgURI = imageURI;
+    }, function (err) {
+      // An error occured. Show a message to the user
+    });
+  }
+
+  $scope.choosePhoto = function () {
+    var options = {
+      quality: 75,
+      destinationType: Camera.DestinationType.FILE_URI,
+      sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 300,
+      targetHeight: 300,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false
+    };
+
+    $cordovaCamera.getPicture(options).then(function (imageURI) {
+      $scope.imgURI = imageURI;
+    }, function (err) {
+      // An error occured. Show a message to the user
+    });
+  }
+})
