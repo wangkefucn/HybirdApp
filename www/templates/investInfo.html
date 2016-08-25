@@ -1,3 +1,14 @@
 <ion-view title="ご投資情報" id="investInfo" class=" ">
-    <ion-content padding="true" class="has-header"></ion-content>
+    <ion-content has-header="true" padding="true">
+      <div class="row calm-bg" style="border-bottom: solid 1px">
+        <div class="col-25 col-center text-center">年月</div>
+        <div class="col-33 col-center text-center">保有資産評価額<br>前月比</div>
+        <div class="col col-center text-center">取得金額合計<br>評価損益合計</div>
+      </div>
+      <div ng-repeat="item in peTusJukyuMisiJyuhuOutVoList" class="row" style="border-bottom: solid 1px" ng-class-even="'balanced-bg'">
+        <div class="col-25 col-center">{{ item.ym | date:"yyyy/MM" }}</div>
+        <div class="col-33 col-center text-right">{{ item.hyukkngk | currency:"":0 }}円<br>{{ item.hyukkngkZngtRate | currency:"":0 }}円</div>
+        <div class="col col-center text-right">{{ item.shtkKngkGuki | currency:"":0 }}円<br>{{ item.hyuksnekGuki | currency:"":0 }}円</div>
+      </div>
+    </ion-content>
 </ion-view>
