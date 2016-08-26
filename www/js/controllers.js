@@ -14,9 +14,59 @@ function ($scope, $stateParams) {
   // });
   var testJson = '{"result":0,"errorCode":"","error":"","peTusJukyuMisiJyuhuOutVoList":[{ "ym":"201412" , "hyukkngk":"1453913" , "hyukkngkZngtRate":"-3431" , "shtkKngkGuki":"1434059" , "hyuksnekGuki":"19854" },{ "ym":"201501" , "hyukkngk":"1440824" , "hyukkngkZngtRate":"-13089" , "shtkKngkGuki":"1436219" , "hyuksnekGuki":"4605" },{ "ym":"201502" , "hyukkngk":"1448948" , "hyukkngkZngtRate":"8124" , "shtkKngkGuki":"1440510" , "hyuksnekGuki":"8438" },{ "ym":"201503" , "hyukkngk":"1711235" , "hyukkngkZngtRate":"262287" , "shtkKngkGuki":"1695671" , "hyuksnekGuki":"15564" },{ "ym":"201504" , "hyukkngk":"1711161" , "hyukkngkZngtRate":"-74" , "shtkKngkGuki":"1702406" , "hyuksnekGuki":"8755" },{ "ym":"201505" , "hyukkngk":"1761466" , "hyukkngkZngtRate":"50305" , "shtkKngkGuki":"1702406" , "hyuksnekGuki":"8755" },{ "ym":"201506" , "hyukkngk":"1738774" , "hyukkngkZngtRate":"-22692" , "shtkKngkGuki":"1708899" , "hyuksnekGuki":"29875" },{ "ym":"201507" , "hyukkngk":"1771898" , "hyukkngkZngtRate":"33215" , "shtkKngkGuki":"1707145" , "hyuksnekGuki":"62844" },{ "ym":"201508" , "hyukkngk":"1701285" , "hyukkngkZngtRate":"-70704" , "shtkKngkGuki":"1709353" , "hyuksnekGuki":"-8068" }]}';
   $scope.peTusJukyuMisiJyuhuOutVoList = eval("(" + testJson + ")").peTusJukyuMisiJyuhuOutVoList;
+  $scope.chartConfig =
+  {
+    options: {
+      //This is the Main Highcharts chart config. Any Highchart options are valid here.
+      //will be overriden by values specified below.
+      chart: {
+        type: 'bar'
+      },
+      tooltip: {
+        style: {
+          padding: 10,
+          fontWeight: 'bold'
+        }
+      }
+    },
+    //The below properties are watched separately for changes.
+
+    //Series object (optional) - a list of series using normal highcharts series options.
+    series: [{
+      data: [10, 15, 12, 8, 7]
+    }],
+    //Title configuration (optional)
+    title: {
+      text: 'Hello'
+    },
+    //Boolean to control showng loading status on chart (optional)
+    //Could be a string if you want to show specific loading text.
+    loading: false,
+    //Configuration for the xAxis (optional). Currently only one x axis can be dynamically controlled.
+    //properties currentMin and currentMax provied 2-way binding to the chart's maximimum and minimum
+    xAxis: {
+      currentMin: 0,
+      currentMax: 20,
+      title: {text: 'values'}
+    },
+    //Whether to use HighStocks instead of HighCharts (optional). Defaults to false.
+    useHighStocks: false,
+    //size (optional) if left out the chart will default to size of the div or something sensible.
+    size: {
+      width: 400,
+      height: 300
+    },
+    //function (optional)
+    func: function (chart) {
+      //setup some logic for the chart
+    }
+  };
+  $scope.landscape = screen.orientation.type.indexOf("landscape") > -1;
+  $scope.portrait = screen.orientation.type.indexOf("portrait") > -1;
 
   window.addEventListener("orientationchange", function(){
-    alert(screen.orientation);
+    $scope.landscape = screen.orientation.type.indexOf("landscape") > -1;
+    $scope.portrait = screen.orientation.type.indexOf("portrait") > -1;
   });
 }])
 
