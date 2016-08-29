@@ -1,7 +1,7 @@
 angular.module('app.controllers', [])
 
 .controller('investInfoCtrl', ['$scope', '$stateParams', // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+function ($scope, $stateParams, $http) {
   //$http.get('http://192.168.1.109/apis/invinfo.json')
   //.error(function(response){
   //  alert(response);
@@ -16,57 +16,48 @@ function ($scope, $stateParams) {
   $scope.peTusJukyuMisiJyuhuOutVoList = eval("(" + testJson + ")").peTusJukyuMisiJyuhuOutVoList;
   $scope.chartConfig =
   {
-    options: {
-      //This is the Main Highcharts chart config. Any Highchart options are valid here.
-      //will be overriden by values specified below.
-      chart: {
-        type: 'bar'
-      },
-      tooltip: {
-        style: {
-          padding: 10,
-          fontWeight: 'bold'
-        }
+    title: {
+      text: ''
+    },
+    xAxis: {
+      categories: ['12月', '01月', '02月', '03月', '04月', '05月', '06月', '07月', '08月']
+    },
+    yAxis: {
+      title: {
+        text: null
       }
     },
-    //The below properties are watched separately for changes.
-
-    //Series object (optional) - a list of series using normal highcharts series options.
     series: [{
-      data: [10, 15, 12, 8, 7]
-    }],
-    //Title configuration (optional)
-    title: {
-      text: 'Hello'
-    },
-    //Boolean to control showng loading status on chart (optional)
-    //Could be a string if you want to show specific loading text.
-    loading: false,
-    //Configuration for the xAxis (optional). Currently only one x axis can be dynamically controlled.
-    //properties currentMin and currentMax provied 2-way binding to the chart's maximimum and minimum
-    xAxis: {
-      currentMin: 0,
-      currentMax: 20,
-      title: {text: 'values'}
-    },
-    //Whether to use HighStocks instead of HighCharts (optional). Defaults to false.
-    useHighStocks: false,
-    //size (optional) if left out the chart will default to size of the div or something sensible.
-    size: {
-      width: 400,
-      height: 300
-    },
-    //function (optional)
-    func: function (chart) {
-      //setup some logic for the chart
-    }
+      type: 'column',
+      data: [19854, 4605, 8438, 15664, 8755, 8755, 29875, 62844, -8068],
+      showInLegend: false
+    }, {
+      type: 'spline',
+      data: [1453913, 1440824, 1448948, 1711235, 1711161, 1761466, 1738774, 1771989, 1701285],
+      showInLegend: false,
+      marker: {
+        lineWidth: 2,
+        //lineColor: Highcharts.getOptions().colors[10],
+        lineColor: 'yellow',
+        fillColor: 'yellow'
+      }
+    }]
   };
-  $scope.landscape = screen.orientation.type.indexOf("landscape") > -1;
-  $scope.portrait = screen.orientation.type.indexOf("portrait") > -1;
+  var orientation = screen.orientation;
+  if (typeof(screen.orientation) === 'object') {
+    orientation = screen.orientation.type;
+  }
+  $scope.landscape = orientation.indexOf("landscape") > -1;
+  $scope.portrait = !$scope.landscape;
 
   window.addEventListener("orientationchange", function(){
-    $scope.landscape = screen.orientation.type.indexOf("landscape") > -1;
-    $scope.portrait = screen.orientation.type.indexOf("portrait") > -1;
+    orientation = screen.orientation;
+    if (typeof(screen.orientation) === 'object') {
+      orientation = screen.orientation.type;
+    }
+    $scope.landscape = orientation.indexOf("landscape") > -1;
+    $scope.portrait = $scope.landscape;
+    $scope.$apply();
   });
 }])
 
@@ -88,13 +79,13 @@ function ($scope, $stateParams, $http, $state) {
 		var data = {};
 		data.serviceCommon = serviceCommon;
 		data.aplData = aplData;
-    //$http.post('https://w00sec-trading.uat.starmf.jp/ws/mfCmnCauSysLgiAction_ws.do', data)
-    //.success(function(response){
-    //  alert(JSON.stringify(response));
-    //   if (response.serviceCommon.resultCd === '201' || response.serviceCommon.resultCd === '200' ) {
+    $http.post('https://w00sec-trading.uat.starmf.jp/ws/mfCmnCauSysLgiAction_ws.do', data)
+    .success(function(response){
+     alert(JSON.stringify(response));
+      if (response.serviceCommon.resultCd === '201' || response.serviceCommon.resultCd === '200' ) {
           $state.go("tabsController.hometop", {}, {reload: true});
-    //   }
-    //  });
+      }
+     });
 	  };
 }])
 
