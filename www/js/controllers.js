@@ -1,6 +1,6 @@
 angular.module('app.controllers', [])
 
-.controller('investInfoCtrl', ['$scope', '$stateParams', // TIP: Access Route Parameters for your page via $stateParams.parameterName
+.controller('investInfoCtrl', ['$scope', '$stateParams', '$http', // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams, $http) {
   //$http.get('http://192.168.1.109/apis/invinfo.json')
   //.error(function(response){
@@ -27,9 +27,13 @@ function ($scope, $stateParams, $http) {
         text: null
       }
     },
+    size: {
+      width: 640,
+      height: 230
+    },
     series: [{
       type: 'column',
-      data: [19854, 4605, 8438, 15664, 8755, 8755, 29875, 62844, -8068],
+      data: [198540, 46050, 84380, 156640, 87550, 87550, 298750, 628440, -8068],
       showInLegend: false
     }, {
       type: 'spline',
@@ -56,7 +60,7 @@ function ($scope, $stateParams, $http) {
       orientation = screen.orientation.type;
     }
     $scope.landscape = orientation.indexOf("landscape") > -1;
-    $scope.portrait = $scope.landscape;
+    $scope.portrait = !$scope.landscape;
     $scope.$apply();
   });
 }])
@@ -79,13 +83,13 @@ function ($scope, $stateParams, $http, $state) {
 		var data = {};
 		data.serviceCommon = serviceCommon;
 		data.aplData = aplData;
-    $http.post('https://w00sec-trading.uat.starmf.jp/ws/mfCmnCauSysLgiAction_ws.do', data)
-    .success(function(response){
-     alert(JSON.stringify(response));
-      if (response.serviceCommon.resultCd === '201' || response.serviceCommon.resultCd === '200' ) {
+    // $http.post('https://w00sec-trading.uat.starmf.jp/ws/mfCmnCauSysLgiAction_ws.do', data)
+    // .success(function(response){
+    //   alert(JSON.stringify(response));
+    //   if (response.serviceCommon.resultCd === '201' || response.serviceCommon.resultCd === '200' ) {
           $state.go("tabsController.hometop", {}, {reload: true});
-      }
-     });
+     //  }
+     // });
 	  };
 }])
 
