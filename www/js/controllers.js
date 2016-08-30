@@ -77,19 +77,19 @@ function ($scope, $stateParams, $http, $state) {
 		serviceCommon.ryushKbn = "ITNRI991";
 		serviceCommon.loginTuskGyumRank = "00,50,00,00,00,00,00,00,00,00"
 		var aplData = {};
-		aplData.loginTuskLoginId = "E40610062";
-		aplData.gnziLoginPswd = "a1111111";
+		aplData.loginTuskLoginId = "tnm5gd1";
+		aplData.gnziLoginPswd = "c1111111";
 		aplData.uriKbn = "01";
 		var data = {};
 		data.serviceCommon = serviceCommon;
 		data.aplData = aplData;
-    // $http.post('https://w00sec-trading.uat.starmf.jp/ws/mfCmnCauSysLgiAction_ws.do', data)
-    // .success(function(response){
-    //   alert(JSON.stringify(response));
-    //   if (response.serviceCommon.resultCd === '201' || response.serviceCommon.resultCd === '200' ) {
+    $http.post('https://s04sec-trading.uat.starmf.jp/ws/mfCmnCauSysLgiAction_ws.do', data)
+    .success(function(response){
+      alert(JSON.stringify(response));
+      if (response.serviceCommon.resultCd === '201' || response.serviceCommon.resultCd === '200' ) {
           $state.go("tabsController.hometop", {}, {reload: true});
-     //  }
-     // });
+      }
+     });
 	  };
 }])
 
